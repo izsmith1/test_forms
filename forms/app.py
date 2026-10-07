@@ -13,6 +13,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    birthday = db.Column(db.Date, nullable=True)  # New birthday field
 
 with app.app_context():
     db.create_all()
@@ -30,12 +31,13 @@ def add_user():
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
+        birthday = request.form.get('birthday')  # Get birthday from form
 
         if not username or not email:
             flash('Username and Email are required!', 'danger')
             return redirect(url_for('add_user'))
 
-        new_user = User(username=username, email=email)
+        new_user = User(username=username, email=email, birthday=birthday)
         db.session.add(new_user)
         db.session.commit()
         flash('User added succesfully!', 'success')
