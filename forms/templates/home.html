@@ -33,7 +33,7 @@
                     <td>{{ user.id }}</td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.birthday }}</td>
+                    <td>{{ user.birthday.strftime('%m/%d/%Y') if user.birthday else '' }}</td>
                     <td>
                         <a href="{{ url_for('view_user', user_id=user.id) }}" class="btn btn-secondary btn-sm">Manage</a>
                     </td>
